@@ -35,6 +35,7 @@ export function useAllApproved () {
       for (const c in nonApproveList) {
         const list = nonApproveList[c]
         const arr1 = []
+        // @ts-ignore
         for (const item of list) {
           arr1.push({
             data: ERC20_INTERFACE.encodeFunctionData(framekey, [account, item.spender]),
@@ -55,6 +56,7 @@ export function useAllApproved () {
             const value = list[j]
             const a = JSBI.greaterThan(JSBI.BigInt(value), JSBI.BigInt(0))
             const obj = {
+              // @ts-ignore
               ...nonApproveList[c][j],
               chainId: c,
               isAllowance: a,
