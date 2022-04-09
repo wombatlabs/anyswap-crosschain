@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext, useMemo, useCallback } from 'react'
-// import {GetTokenListByChainID, createAddress, isAddress, getProvider} from 'multichain-bridge'
-import {GetTokenListByChainID, createAddress, isAddress} from 'multichain-bridge'
+import { GetTokenListByChainID, createAddress, isAddress } from 'multichain-bridge'
 import { useTranslation } from 'react-i18next'
 import { ThemeContext } from 'styled-components'
 import { ArrowDown, Plus, Minus } from 'react-feather'
@@ -30,13 +29,12 @@ import ModalContent from '../../components/Modal/ModalContent'
 import QRcode from '../../components/QRcode'
 
 // import { useWalletModalToggle, useToggleNetworkModal } from '../../state/application/hooks'
-import { useWalletModalToggle } from '../../state/application/hooks'
+import { useWalletModalToggle, useAppState } from '../../state/application/hooks'
 import { tryParseAmount } from '../../state/swap/hooks'
 import { useBetaMessageManager } from '../../state/user/hooks'
 // import { useBridgeAllTokenBalances } from '../../state/wallet/hooks'
 
 import config from '../../config'
-import {bridgeApi} from '../../config/constant'
 import {getParams} from '../../config/tools/getUrlParams'
 import {selectNetwork} from '../../config/tools/methods'
 
@@ -102,7 +100,7 @@ export default function CrossChain() {
   // const history = createBrowserHistory()
   const theme = useContext(ThemeContext)
   const toggleWalletModal = useWalletModalToggle()
-
+  const { apiAddress } = useAppState()
   const { getTerraBalances } = useTerraBalance()
   const connectedWallet = useConnectedWallet()
   const [showBetaMessage] = useBetaMessageManager()
@@ -254,6 +252,7 @@ export default function CrossChain() {
       )
       && swapType !== BridgeType.deposit
     ) {
+      console.log('>>> go 9')
       history.go(0)
     }
   }, [chainId, bridgeConfig, swapType])
@@ -309,10 +308,7 @@ export default function CrossChain() {
 
   const isUsePool = useMemo(() => {
     // console.log(selectCurrency)
-    if (
-      selectCurrency?.symbol?.toLowerCase() === 'prq'
-      || selectCurrency?.symbol?.toLowerCase() === 'zeum'
-    ) {
+    if (selectCurrency?.symbol?.toLowerCase() === 'prq') {
       return false
     }
     return true
@@ -388,6 +384,7 @@ export default function CrossChain() {
       } else {
         if (selectCurrency?.chainId) {
           sessionStorage.setItem(SelectBridgeChainIdLabel, selectCurrency.chainId)
+          console.log('>>> go 10')
           history.go(0)
           // setSelectChain(selectCurrency.chainId)
         }
@@ -544,14 +541,13 @@ export default function CrossChain() {
   
   const outputBridgeValue = useMemo(() => {
     if (inputBridgeValue && destConfig) {
-      const minFee = destConfig.BaseFeePercent ? (destConfig.MinimumSwapFee / (100 + destConfig.BaseFeePercent)) * 100 : destConfig.MinimumSwapFee
-      const baseFee = destConfig.BaseFeePercent ? minFee : 0
+      const baseFee = destConfig.BaseFeePercent ? (destConfig.MinimumSwapFee / (100 + destConfig.BaseFeePercent)) * 100 : 0
       const fee = Number(inputBridgeValue) * Number(destConfig.SwapFeeRatePerMillion)
       // console.log(destConfig)
       // console.log(baseFee)
       let value = Number(inputBridgeValue) - fee
-      if (fee < Number(minFee)) {
-        value = Number(inputBridgeValue) - Number(minFee)
+      if (fee < Number(destConfig.MinimumSwapFee)) {
+        value = Number(inputBridgeValue) - Number(destConfig.MinimumSwapFee)
       } else if (fee > destConfig.MaximumSwapFee) {
         value = Number(inputBridgeValue) - Number(destConfig.MaximumSwapFee)
       } else {
@@ -633,7 +629,6 @@ export default function CrossChain() {
 
 
   const btnTxt = useMemo(() => {
-    // console.log(isWrapInputError)
     if (isWrapInputError && inputBridgeValue && swapType !== BridgeType.deposit) {
       return isWrapInputError
     } else if (
@@ -653,26 +648,24 @@ export default function CrossChain() {
     return t('swap')
   }, [t, isWrapInputError, inputBridgeValue, swapType, isUnderlying, isDestUnderlying, isUsePool])
 
-  // useEffect(() => {
-  //   if (!chainId) {
-  //     history.go(0)
-  //   }
-  // }, [chainId])
-
   useEffect(() => {
     setP2pAddress('')
-    if (account && selectCurrency && destConfig && swapType === BridgeType.deposit && chainId) {
-      // console.log(destConfig)
+
+    if (apiAddress && account && selectCurrency && destConfig && swapType === BridgeType.deposit && chainId) {
       if (selectCurrency?.specChainId === TERRA_CHAIN) {
         setP2pAddress(destConfig?.DepositAddress)
       } else {
-        getP2PInfo(account, chainId, selectCurrency?.symbol, selectCurrency?.address).then((res:any) => {
-          // console.log(res)
-          // console.log(selectCurrency)
+        getP2PInfo({
+          api: apiAddress,
+          account,
+          chainId,
+          symbol: selectCurrency?.symbol,
+          token: selectCurrency?.address,
+        }).then((res:any) => {
           if (res?.p2pAddress) {
             const localAddress = createAddress(account, selectCurrency?.symbol, destConfig?.DepositAddress)
+
             if (res?.p2pAddress === localAddress) {
-              // console.log(localAddress)
               setP2pAddress(localAddress)
               setLocalConfig(account, selectCurrency?.address, chainId, CROSSCHAINBRIDGE, {p2pAddress: localAddress})
             }
@@ -681,17 +674,16 @@ export default function CrossChain() {
       }
     }
   }, [account, selectCurrency, destConfig, chainId, swapType])
-  
-  
 
-  useEffect(() => {
-    
-    if (chainId) {
+  useEffect(() => {    
+    if (chainId && apiAddress) {
+      console.log('>>>> Front call')
       setAllTokens({})
+      console.log('>>>> call GetTokenListByChainID')
       GetTokenListByChainID({
         srcChainID: chainId,
         chainList: config.getCurConfigInfo().showChain,
-        bridgeAPI: bridgeApi + '/v2/tokenlist'
+        bridgeAPI: apiAddress + '/v2/tokenlist'
       }).then((res:any) => {
         console.log(res)
         if (res) {
@@ -706,7 +698,6 @@ export default function CrossChain() {
     } else {
       setAllTokens({})
     }
-  // }, [chainId, swapType, count, selectCurrency])
   }, [chainId, count])
 
   // console.log(selectChain)
@@ -733,13 +724,13 @@ export default function CrossChain() {
       //     }
       //   }
       // }
-      let initChainId:any = '',
-        initChainList:any = []
+      let initChainId:any = ''
+      let initChainList:any = []
+
       if (selectCurrency) {
         const arr = []
         for (const c in selectCurrency?.destChains) {
           if (c?.toString() === chainId?.toString()) continue
-          if (c?.toString() !== config.getCurChainInfo(c).chainID?.toString()) continue
           arr.push(c)
         }
         // console.log(arr)

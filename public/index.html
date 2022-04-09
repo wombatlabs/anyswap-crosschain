@@ -6,40 +6,199 @@
     <link rel="apple-touch-icon" sizes="192x192" href="%PUBLIC_URL%/images/192x192_App_Icon.png" />
     <link rel="apple-touch-icon" sizes="512x512" href="%PUBLIC_URL%/images/512x512_App_Icon.png" />
     <link rel ="stylesheet" href="fonts/fonts.css">
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#2483fe" />
     <meta name="fortmatic-site-verification" content="j93LgcVZk79qcgyo" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-
-    <title>AnySwap - Cross Chain Protocol</title>
+    <title>Cross-chain</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script type="text/javascript">
+    /*
+   "0xd2774939f988ee4545822333105ef4554f44496c":{
+      "address":"0xd2774939f988ee4545822333105ef4554f44496c",
+      "name":"TetherUSD111",
+      "symbol":"USDT",
+      "decimals":8,
+      "underlying":{
+        "address":"0xdf46b199612dfcc4617e7ce627d9464aa914b173",
+        "name":"Binance-PegBSC-USD",
+        "symbol":"anyUSDT",
+        "decimals":8
+     },
+      "destChains":{
+         "97":{
+            "0x6e9c98a8a481bf038ba7e1d669a0086547dd144e":{
+               "name":"TetherUSD222",
+               "symbol":"USDT",
+               "decimals":8,
+               "address":"0x6e9c98a8a481bf038ba7e1d669a0086547dd144e",
+               "underlying":{
+                 "address":"0xc0c3394781c23faa538a506b3c96fb59c050bed8",
+                 "name":"TetherUSD111",
+                 "symbol":"anyUSDT",
+                 "decimals":8
+              },
+               "swapfeeon":1,
+               "MaximumSwap":"20000000",
+               "MinimumSwap":"12",
+               "BigValueThreshold":"5000000",
+               "SwapFeeRatePerMillion":0.1,
+               "MaximumSwapFee":"0.9",
+               "MinimumSwapFee":"0.9",
+               "type":"STABLEV3",
+               "tokenid":"anyUSDT",
+               "routerToken":"0x20aabbc7752457e980c53ac7bc8c8a72df2aa4eb"
+            }
+         }
+      },
+      "price":1.001,
+      "logoUrl":"https://assets.coingecko.com/coins/images/325/large/Tether-logo.png",
+      "chainId":"1"
+   }
+   }
+    */
+      /*
+[
+  {
+    "tokenID": "TETHER",
+    "multichainTokens": [
+      {
+        "chainId": "80001",
+        "router": {
+          "ChainID": "80001",
+          "BlockChain": "tpolygon",
+          "RouterContract": "0x20aabbc7752457e980c53ac7bc8c8a72df2aa4eb",
+          "Confirmations": 3,
+          "InitialHeight": 0
+        },
+        "anyswapToken": {
+          "TokenID": "TETHER",
+          "Decimals": 8,
+          "ContractAddress": "0xdf46b199612dfcc4617e7ce627d9464aa914b173",
+          "ContractVersion": 6,
+          "RouterContract": "",
+          "Underlying": "0xD2774939F988EE4545822333105EF4554F44496C"
+        },
+        "swapConfig": {
+          "MaximumSwap": "1000000000000000000000000",
+          "MinimumSwap": "100000000000000000000",
+          "BigValueThreshold": "100000000000000000000000",
+          "SwapFeeRatePerMillion": 1000,
+          "MaximumSwapFee": "10000000000000000000",
+          "MinimumSwapFee": "1500000000000000000"
+        }
+      },
+      {
+        "chainId": "97",
+        "router": {
+          "ChainID": "97",
+          "BlockChain": "tbnb",
+          "RouterContract": "0x69558d860103e420013fadde75f81b54a06d728f",
+          "Confirmations": 3,
+          "InitialHeight": 0
+        },
+        "anyswapToken": {
+          "TokenID": "TETHER",
+          "Decimals": 8,
+          "ContractAddress": "0xc0c3394781c23faa538a506b3c96fb59c050bed8",
+          "ContractVersion": 6,
+          "RouterContract": "",
+          "Underlying": "0x6e9c98a8a481BF038Ba7e1d669a0086547dd144E"
+        },
+        "swapConfig": {
+          "MaximumSwap": "1000000000000000000000000",
+          "MinimumSwap": "100000000000000000000",
+          "BigValueThreshold": "100000000000000000000000",
+          "SwapFeeRatePerMillion": 1000,
+          "MaximumSwapFee": "10000000000000000000",
+          "MinimumSwapFee": "1500000000000000000"
+        }
+      }
+    ]
+  }
+]
+      */
+      window.evmcc_pairs = [
+        [
+          {
+            chainId: 97,  // chainId
+            address:"0x6e9c98a8a481bf038ba7e1d669a0086547dd144e", // anyswapToken.Underlying
+            name: "TetherUSD", // anyswapToken.TokenID
+            symbol: "USDT", // anyswapToken.TokenID
+            decimals: 8, // anyswapToken.Decimals
+            underlying: {
+               address: "0xd71a1bbabb389f3af78633e040bd994a99210c59", // anyswapToken.ContractAddress
+               name: "TetherUSD", // anyswapToken.TokenID
+               symbol: "anyUSDT", // anyswapToken.TokenID
+               decimals: 8 // anyswapToken.Decimals
+            },
+            routerToken: "0x69558d860103e420013fadde75f81b54a06d728f", // router.RouterContract
+            swapfeeon: 1, // swapConfig.... need check
+            MaximumSwap: 20000000,
+            MinimumSwap: 12,
+            BigValueThreshold: 5000000,
+            SwapFeeRatePerMillion: 0.1,
+            MaximumSwapFee: 0.9,
+            MinimumSwapFee: 0.9
+          },
+          {
+            chainId: 77,
+            address:"0x35bE4cA2f4C66861b6B3B9E6F35A7d8FDaD48dea",
+            name: "TetherUSD",
+            symbol: "USDT",
+            decimals: 8,
+            underlying: {
+               address: "0x52C72781aB6B5FE83E0B5c6B0F890D5B08aff6E4",
+               name: "TetherUSD",
+               symbol: "anyUSDT",
+               decimals: 8
+            },
+            routerToken: "0x67AAf7aB10d4273023ddEEad302Bc9a7E7951eC2",
+            swapfeeon: 1,
+            MaximumSwap: 20000000,
+            MinimumSwap: 12,
+            BigValueThreshold: 5000000,
+            SwapFeeRatePerMillion: 0.1,
+            MaximumSwapFee: 0.9,
+            MinimumSwapFee: 0.9
+          },
+          {
+            chainId: 80001,
+            address:"0xd2774939f988ee4545822333105ef4554f44496c",
+            name: "TetherUSD",
+            symbol: "USDT",
+            decimals: 8,
+            underlying: {
+               address: "0xdf46b199612dfcc4617e7ce627d9464aa914b173",
+               name: "TetherUSD",
+               symbol: "anyUSDT",
+               decimals: 8
+            },
+            routerToken: "0x20aabbc7752457e980c53ac7bc8c8a72df2aa4eb",
+            swapfeeon: 1,
+            MaximumSwap: 20000000,
+            MinimumSwap: 12,
+            BigValueThreshold: 5000000,
+            SwapFeeRatePerMillion: 0.1,
+            MaximumSwapFee: 0.9,
+            MinimumSwapFee: 0.9
+            /*
+            "address":"0xd2774939f988ee4545822333105ef4554f44496c",
+            "name":"TetherUSD111",
+            "symbol":"USDT",
+            "decimals":8,
+            "underlying":{
+              "address":"0xdf46b199612dfcc4617e7ce627d9464aa914b173",
+              "name":"Binance-PegBSC-USD",
+              "symbol":"anyUSDT",
+              "decimals":8
+           }*/
+         }
+        ]
+      ]
+    </script>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>  
   </body>
 </html>
