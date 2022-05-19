@@ -10,7 +10,8 @@ export function selectNetwork (chainID:any) {
       request: '',
       ...ethereum
     }
-    if (ethereumFN && ethereumFN.request) {
+    const useChainIdFromStorage = localStorage.getItem('USE_CHAIN_ID_FROM_STORAGE')
+    if (ethereumFN && ethereumFN.request && useChainIdFromStorage === 'used') {
       // console.log(ethereumFN)
       // console.log(ethereumFN.chainId)
 

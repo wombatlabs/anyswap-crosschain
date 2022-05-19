@@ -80,6 +80,7 @@ export type AppSettingsData = {
 
 export type AppData = {
   owner: string
+  baseInitChainId: string
   logo: string
   projectName: string
   brandColor: string

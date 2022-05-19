@@ -31,6 +31,7 @@ const initialState: ApplicationState = {
   routerConfigAddress: '',
   serverAdminAddress: '',
   appManagement: false,
+  baseInitChainId: '',
   owner: '',
   logo: '',
   projectName: '',

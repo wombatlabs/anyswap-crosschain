@@ -121,6 +121,9 @@ export function getNetwork(ENV_NODE_CONFIG: any, INIT_NODE: any) {
     } else {
       nc = getNode(localHost, INIT_NODE)
       localStorage.setItem(ENV_NODE_CONFIG, nc)
+
+      // set USE_CHAIN_ID_FROM_STORAGE as 'use' for using baseChainId from blockchain storage via first loading
+      localStorage.setItem('USE_CHAIN_ID_FROM_STORAGE', 'use')
     }
   }
   return nc

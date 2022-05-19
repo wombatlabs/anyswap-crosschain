@@ -24,6 +24,7 @@ import { retrieveAppData } from '../state/application/actions'
 import { AppState } from '../state'
 import { useActiveWeb3React } from '../hooks'
 import useAppData from '../hooks/useAppData'
+import { selectNetwork } from '../config/tools/methods'
 
 const LoaderWrapper = styled.div`
   position: absolute;
@@ -118,6 +119,14 @@ export default function App() {
 
   useEffect(() => {
     if (data) dispatch(retrieveAppData(data))
+
+    if (!isLoading && data?.baseInitChainId) {
+      const useChainIdFromStorage = localStorage.getItem('USE_CHAIN_ID_FROM_STORAGE')
+      if (useChainIdFromStorage === 'use') {
+        localStorage.setItem('USE_CHAIN_ID_FROM_STORAGE', 'used')
+        selectNetwork(data.baseInitChainId)
+      }
+    }
   }, [data, isLoading, dispatch])
 
   const appManagement = useSelector((state: AppState) => state.application.appManagement)

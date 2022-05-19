@@ -13,6 +13,7 @@ const parseInfo = (info: string) => {
     routerConfigAddress: '',
     serverAdminAddress: '',
     owner: '',
+    baseInitChainId: '',
     logo: '',
     projectName: '',
     brandColor: '',
@@ -49,7 +50,8 @@ const parseInfo = (info: string) => {
       elementsColorLight,
       elementsColorDark,
       socialLinks,
-      disableSourceCopyright
+      disableSourceCopyright,
+      baseInitChainId = '1',
     } = crossChainSettings
 
     if (apiAddress) parsed.apiAddress = apiAddress
@@ -65,6 +67,7 @@ const parseInfo = (info: string) => {
     if (elementsColorDark) parsed.elementsColorDark = elementsColorDark
     if (Array.isArray(socialLinks) && socialLinks.length) parsed.socialLinks = socialLinks
     if (disableSourceCopyright) parsed.disableSourceCopyright = disableSourceCopyright
+    if (baseInitChainId) parsed.baseInitChainId = baseInitChainId
   }
 
   return parsed
@@ -104,7 +107,7 @@ export default function useAppData(): {
         setError(error)
       }
 
-      
+
       if (parsed?.apiAddress) {
         try {
           const response: any = await getUrlData(`${parsed?.apiAddress}/config`)
@@ -124,13 +127,13 @@ export default function useAppData(): {
         const appSettingsJson: string | null = localStorage.getItem('appSettings')
         if (appSettingsJson !== null) {
           const appSettings = JSON.parse(appSettingsJson)
-          
+
           parsed = {
             ...parsed,
             appSettings
           }
         }
-        
+
       } catch (e) {}
 
 
