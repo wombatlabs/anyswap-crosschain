@@ -49,7 +49,7 @@ export default {
     lookBlock: BASE_MAIN_EXPLORER + '/block/',
     explorer: BASE_MAIN_EXPLORER,
     symbol: symbol,
-    name: 'ethereum',
+    name: 'base',
     networkName: 'BASE Mainnet',
     networkLogo: 'BASE',
     type: 'main',
