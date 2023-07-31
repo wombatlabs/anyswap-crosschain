@@ -40,6 +40,7 @@ import hbit, {HBIT_MAIN_CHAINID} from './hashbit'
 import fkw, {FKW_MAIN_CHAINID} from './fkw'
 import ozo, {OZO_MAIN_CHAINID} from './ozone'
 import base, {BASE_MAIN_CHAINID} from './base'
+import linea, {LINEA_MAIN_CHAINID} from './linea'
 
 
 import {VERSION, USE_VERSION, env} from '../constant'
@@ -90,6 +91,7 @@ export const chainInfo:ConFig = {
   ...fkw,
   ...ozo,
   ...base,
+  ...linea,
 }
 
 const allChainList = [
@@ -132,6 +134,7 @@ const allChainList = [
   FKW_MAIN_CHAINID,
   OZO_MAIN_CHAINID,
   BASE_MAIN_CHAINID,
+  LINEA_MAIN_CHAINID,
 ]
 
 const useChain:any = {
@@ -283,6 +286,7 @@ const useChain:any = {
     FKW_MAIN_CHAINID,
     OZO_MAIN_CHAINID,
     BASE_MAIN_CHAINID,
+    LINEA_MAIN_CHAINID,
   ]
 }
 
