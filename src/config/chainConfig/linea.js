@@ -31,13 +31,13 @@ const bridgeToken = {
 
 export default {
   [LINEA_MAIN_CHAINID]: {
-    wrappedToken: '0x4200000000000000000000000000000000000006',
+    wrappedToken: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f',
     tokenListUrl: tokenListUrl + LINEA_MAIN_CHAINID,
     tokenList: formatSwapTokenList(symbol, tokenList),
     ...bridgeToken[USE_VERSION],
     swapRouterToken: '',
     swapInitToken: '',
-    multicalToken: '0xa53685b101644Bcc36723fe58606B8981E45D13B',
+    multicalToken: '0x5D155A04De5bB501f022E44AEd7FF23A6Ff2C1F1',
     v1FactoryToken: '',
     v2FactoryToken: '',
     timelock: '',
