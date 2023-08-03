@@ -2,7 +2,7 @@ import {formatSwapTokenList, getLocalRPC} from './methods'
 import {tokenListUrl, VERSION, USE_VERSION} from '../constant'
 
 export const EDG_MAIN_CHAINID = 2021
-export const EDG_MAINNET = getLocalRPC(EDG_MAIN_CHAINID, 'https://edgeware-rpc.dwellir.com/')
+export const EDG_MAINNET = getLocalRPC(EDG_MAIN_CHAINID, 'https://rpc.edgscan.live/')
 export const EDG_MAIN_EXPLORER = 'https://edgscan.live'
 
 export const tokenList = []
