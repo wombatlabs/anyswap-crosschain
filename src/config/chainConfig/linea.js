@@ -49,7 +49,7 @@ export default {
     lookBlock: LINEA_MAIN_EXPLORER + '/block/',
     explorer: LINEA_MAIN_EXPLORER,
     symbol: symbol,
-    name: 'ethereum',
+    name: 'Linea',
     networkName: 'LINEA Mainnet',
     networkLogo: 'LINEA',
     type: 'main',
