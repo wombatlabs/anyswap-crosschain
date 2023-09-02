@@ -39,7 +39,12 @@ import edg, {EDG_MAIN_CHAINID} from './edg'
 import hbit, {HBIT_MAIN_CHAINID} from './hashbit'
 import fkw, {FKW_MAIN_CHAINID} from './fkw'
 import ozo, {OZO_MAIN_CHAINID} from './ozone'
+
+import base, {BASE_MAIN_CHAINID} from './base'
+import linea, {LINEA_MAIN_CHAINID} from './linea'
+
 import xzo, {XZO_MAIN_CHAINID} from './xzo'
+
 
 
 import {VERSION, USE_VERSION, env} from '../constant'
@@ -89,7 +94,10 @@ export const chainInfo:ConFig = {
   ...hbit,
   ...fkw,
   ...ozo,
-  ...xzo,
+
+  ...base,
+  ...linea,
+  ...xzo
 }
 
 const allChainList = [
@@ -131,7 +139,9 @@ const allChainList = [
   HBIT_MAIN_CHAINID,
   FKW_MAIN_CHAINID,
   OZO_MAIN_CHAINID,
-  XZO_MAIN_CHAINID,
+  BASE_MAIN_CHAINID,
+  LINEA_MAIN_CHAINID,
+  XZO_MAIN_CHAINID
 ]
 
 const useChain:any = {
@@ -282,6 +292,8 @@ const useChain:any = {
     HBIT_MAIN_CHAINID,
     FKW_MAIN_CHAINID,
     OZO_MAIN_CHAINID,
+    BASE_MAIN_CHAINID,
+    LINEA_MAIN_CHAINID,
     XZO_MAIN_CHAINID,
   ]
 }

@@ -1,14 +1,14 @@
 import {formatSwapTokenList, getLocalRPC} from './methods'
 import {tokenListUrl, VERSION, USE_VERSION} from '../constant'
 
-export const EDG_MAIN_CHAINID = 2021
-export const EDG_MAINNET = getLocalRPC(EDG_MAIN_CHAINID, 'https://rpc.edgscan.live/')
-export const EDG_MAIN_EXPLORER = 'https://edgscan.live'
+export const BASE_MAIN_CHAINID = 8453
+export const BASE_MAINNET = getLocalRPC(BASE_MAIN_CHAINID, 'https://base.rpc.thirdweb.com/')
+export const BASE_MAIN_EXPLORER = 'https://basescan.org/'
 
 export const tokenList = []
 export const testTokenList = []
 
-const symbol = 'EDG'
+const symbol = 'ETH'
 
 const bridgeToken = {
   [VERSION.V1]: {
@@ -30,32 +30,32 @@ const bridgeToken = {
 }
 
 export default {
-  [EDG_MAIN_CHAINID]: {
-    wrappedToken: '0x457dE4e275A6b3C0D3750519221dD1dF19d54f01',
-    tokenListUrl: tokenListUrl + EDG_MAIN_CHAINID,
+  [BASE_MAIN_CHAINID]: {
+    wrappedToken: '0x4200000000000000000000000000000000000006',
+    tokenListUrl: tokenListUrl + BASE_MAIN_CHAINID,
     tokenList: formatSwapTokenList(symbol, tokenList),
     ...bridgeToken[USE_VERSION],
     swapRouterToken: '',
     swapInitToken: '',
-    multicalToken: '0xF579269Aec2168E44FE4EBA632D942e9701331db',
+    multicalToken: '0xa53685b101644Bcc36723fe58606B8981E45D13B',
     v1FactoryToken: '',
     v2FactoryToken: '',
     timelock: '',
-    nodeRpc: EDG_MAINNET,
-    nodeRpcList: [EDG_MAINNET],
-    chainID: EDG_MAIN_CHAINID,
-    lookHash: EDG_MAIN_EXPLORER + '/tx/',
-    lookAddr: EDG_MAIN_EXPLORER + '/address/',
-    lookBlock: EDG_MAIN_EXPLORER + '/block/',
-    explorer: EDG_MAIN_EXPLORER,
+    nodeRpc: BASE_MAINNET,
+    nodeRpcList: [BASE_MAINNET],
+    chainID: BASE_MAIN_CHAINID,
+    lookHash: BASE_MAIN_EXPLORER + '/tx/',
+    lookAddr: BASE_MAIN_EXPLORER + '/address/',
+    lookBlock: BASE_MAIN_EXPLORER + '/block/',
+    explorer: BASE_MAIN_EXPLORER,
     symbol: symbol,
-    name: 'Edgeware',
-    networkName: 'Edgeware Mainnet',
-    networkLogo: 'EDG',
+    name: 'Base',
+    networkName: 'BASE Mainnet',
+    networkLogo: 'BASE',
     type: 'main',
-    label: EDG_MAIN_CHAINID,
+    label: BASE_MAIN_CHAINID,
     isSwitch: 1,
-    suffix: 'EDG',
+    suffix: 'ETH',
     anyToken: ''
   },
 }
