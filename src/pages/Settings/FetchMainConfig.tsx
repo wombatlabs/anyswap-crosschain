@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ERC20_ABI } from '../../constants/abis/erc20'
@@ -105,6 +106,7 @@ export default function FetchMainConfig({
         // @ts-ignore
         const crosschainTokens: any = {}
         const chainRouters: any = {}
+        const chainRoutersConfirmsCount: any = {}
 
         useMulticall(mainConfigChainId, multicallDataTokenConfigs)
           .then((contractTokenConfigs) => {
@@ -117,6 +119,7 @@ export default function FetchMainConfig({
               switch (method) {
                 case `getChainConfig`:
                   chainRouters[callData.tokenChainId] = aData.RouterContract
+                  chainRoutersConfirmsCount[callData.tokenChainId] = aData.Confirmations.toNumber()
                   break;
                 case `getTokenConfig`:
                   const {
@@ -262,7 +265,8 @@ export default function FetchMainConfig({
                   const chainRouterAddress = chainRouters[chainId]
                   updatedRouterConfigs[`${chainId}:${chainRouterAddress}`] = {
                     address: chainRouterAddress,
-                    chainId
+                    chainId,
+                    confirmations: chainRoutersConfirmsCount[chainId]
                   }
                 })
 

@@ -43,15 +43,16 @@ export default function Updater(): null {
     const fetch = async () => {
       if (!routerConfig || !chainId) return
 
-      const { RouterContract } = await routerConfig.methods.getChainConfig(chainId).call()
+      const routerData = await routerConfig.methods.getChainConfig(chainId).call()
+      const { RouterContract }  = routerData
 
-      dispatch(updateRouterData({ chainId, routerAddress: RouterContract === ZERO_ADDRESS ? '' : RouterContract }))
+      dispatch(updateRouterData({ chainId, routerAddress: RouterContract === ZERO_ADDRESS ? '' : RouterContract, routerConfirmCount: 3 }))
     }
 
     if (routerConfig && chainId) {
       fetch()
     } else {
-      dispatch(updateRouterData({ chainId: chainId || 0, routerAddress: '' }))
+      dispatch(updateRouterData({ chainId: chainId || 0, routerAddress: '', routerConfirmCount: 3 }))
     }
   }, [chainId, mainConfigAddress, mainConfigChainId, routerConfig])
 

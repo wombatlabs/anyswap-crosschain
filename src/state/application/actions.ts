@@ -101,7 +101,7 @@ export type AppData = {
 
 export type AppDataKeys = keyof AppData
 
-export const updateRouterData = createAction<{ chainId: number; routerAddress: string }>('application/updateRouterData')
+export const updateRouterData = createAction<{ chainId: number; routerAddress: string, routerConfirmCount: number }>('application/updateRouterData')
 export const setAppManagement = createAction<{ status: boolean }>('application/setAppManagement')
 export const retrieveAppData = createAction<null | AppData>('application/retrieveAppData')
 export const updateAppOptions = createAction<{ key: AppDataKeys; value: AppData[AppDataKeys] }[]>(
