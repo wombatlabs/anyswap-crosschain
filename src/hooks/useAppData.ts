@@ -21,6 +21,7 @@ const parseInfo = (info: string) => {
     elementsColorLight: '',
     elementsColorDark: '',
     socialLinks: [],
+    menuLinks: [],
     disableSourceCopyright: false,
     tokenIcons: {},
     appSettings: {
@@ -53,6 +54,7 @@ const parseInfo = (info: string) => {
       elementsColorDark,
       tokenIcons,
       socialLinks,
+      menuLinks,
       disableSourceCopyright,
       appSettings,
     } = crossChainSettings
@@ -72,6 +74,7 @@ const parseInfo = (info: string) => {
     if (elementsColorLight) parsed.elementsColorLight = elementsColorLight
     if (elementsColorDark) parsed.elementsColorDark = elementsColorDark
     if (Array.isArray(socialLinks) && socialLinks.length) parsed.socialLinks = socialLinks
+    if (Array.isArray(menuLinks) && menuLinks.length) parsed.menuLinks = menuLinks
     if (disableSourceCopyright) parsed.disableSourceCopyright = disableSourceCopyright
     parsed.tokenIcons = (tokenIcons && Object.keys(tokenIcons).length) ? tokenIcons : {}
   }

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
@@ -316,11 +317,15 @@ export default function Contracts() {
 
   const [routerChainId, setRouterChainId] = useState('')
   const [routerAddress, setRouterAddress] = useState('')
+  const [routerConfirmCount, setRouterConfirmCount] = useState(3)
 
   useEffect(() => {
     if (chainId !== undefined && stateRouterAddress[chainId]) {
       setRouterChainId(String(chainId))
       setRouterAddress(stateRouterAddress[chainId])
+      if (stateAppSettings?.routerConfigs[`${chainId}:${stateRouterAddress[chainId]}`]) {
+        setRouterConfirmCount(stateAppSettings.routerConfigs[`${chainId}:${stateRouterAddress[chainId]}`].confirmations)
+      }
     } else {
       setRouterChainId('')
       setRouterAddress('')
@@ -354,14 +359,14 @@ export default function Contracts() {
       const tx = await routerConfigSigner.setChainConfig(routerChainId, {
         BlockChain: name,
         RouterContract: routerAddress,
-        Confirmations: 3,
+        Confirmations: routerConfirmCount,
         InitialHeight: 0
       })
 
       const receipt = await tx.wait()
 
       if (receipt.status) {
-        dispatch(updateRouterData({ chainId: Number(routerChainId), routerAddress: routerAddress }))
+        dispatch(updateRouterData({ chainId: Number(routerChainId), routerAddress: routerAddress, routerConfirmCount: routerConfirmCount }))
         addTransaction(
           { hash: receipt.transactionHash },
           {
@@ -476,13 +481,16 @@ export default function Contracts() {
     if (selectedContract !== `-`) {
       const {
         chainId,
-        address
+        address,
+        confirmations
       } = appSettings.routerConfigs[selectedContract]
       setRouterChainId(`${chainId}`)
       setRouterAddress(address)
+      setRouterConfirmCount(confirmations)
     } else {
       setRouterChainId(``)
       setRouterAddress(``)
+      setRouterConfirmCount(3)
     }
   }
 
@@ -770,6 +778,12 @@ export default function Contracts() {
                 placeholder="0x..."
                 value={routerAddress}
                 onChange={event => setRouterAddress(event.target.value)}
+              />
+              {t('routerConfirmCount')}
+              <Input
+                type="text"
+                value={routerConfirmCount}
+                onChange={event => setRouterConfirmCount(event.target.value)}
               />
             </OptionLabel>
             {onConfigNetwork ? (

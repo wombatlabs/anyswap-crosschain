@@ -40,6 +40,7 @@ const initialState: ApplicationState = {
   elementsColorLight: '',
   elementsColorDark: '',
   socialLinks: [],
+  menuLinks: [],
   tokenIcons: {},
   disableSourceCopyright: false,
   routerAddress: {},
@@ -74,6 +75,7 @@ export default createReducer(initialState, builder =>
           elementsColorLight,
           elementsColorDark,
           socialLinks,
+          menuLinks,
           tokenIcons,
           disableSourceCopyright,
           appSettings
@@ -94,6 +96,7 @@ export default createReducer(initialState, builder =>
         if (elementsColorLight) state.elementsColorLight = elementsColorLight
         if (elementsColorDark) state.elementsColorDark = elementsColorDark
         if (Array.isArray(socialLinks) && socialLinks.length) state.socialLinks = socialLinks
+        if (Array.isArray(menuLinks) && menuLinks.length) state.menuLinks = menuLinks
         if (disableSourceCopyright) state.disableSourceCopyright = disableSourceCopyright
         state.tokenIcons = (tokenIcons && Object.keys(tokenIcons).length) ? tokenIcons : {}
       }

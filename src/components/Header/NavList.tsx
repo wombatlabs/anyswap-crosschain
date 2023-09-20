@@ -225,7 +225,7 @@ const StyledNavLink = styled(NavLink).attrs({
 export default function NavList() {
   const { t } = useTranslation()
   const { account, active } = useActiveWeb3React()
-  const { owner, appManagement } = useAppState()
+  const { owner, appManagement, menuLinks } = useAppState()
   const dispatch = useDispatch()
   const [isOwner, setIsOwner] = useState<boolean>(!owner || account?.toLowerCase() === owner?.toLowerCase())
 
@@ -241,6 +241,46 @@ export default function NavList() {
 
   return (
     <>
+      <style>
+        {`
+          .menuLink {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: start;
+            -webkit-justify-content: flex-start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            -webkit-align-items: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-align-items: left;
+            -webkit-box-align: left;
+            -ms-flex-align: left;
+            align-items: left;
+            outline: none;
+            cursor: pointer;
+            -webkit-text-decoration: none;
+            text-decoration: none;
+            width: 100%;
+            font-weight: 500;
+            color: #cdd1dd;
+            box-sizing: border-box;
+            padding: 1.1rem 0.875rem;
+            line-height: 1rem;
+            margin: 6px 0;
+            height: 48px;
+            position: relative;
+            white-space: nowrap;
+            font-size: 1.3rem;
+          }
+          .menuLink:hover {
+            color: #979dac;
+          }
+        `}
+      </style>
       <HeaderLinks>
         {/*
         <StyledNavLink id={`dashboard-nav-link`} to={'/dashboard'}>
@@ -332,7 +372,15 @@ export default function NavList() {
         <StyledNavLink id={`pool-nav-link`} to={'/pool'}>
           {t('pool')}
         </StyledNavLink>
-
+        {Array.isArray(menuLinks) && menuLinks.length && (
+          <>
+            {menuLinks.map((item, key) => {
+              return (
+                <a className="menuLink" href={item.address} key={key}>{item.title}</a>
+              )
+            })}
+          </>
+        )}
         {active && isOwner && (
           <StyledNavLink id={`settings-nav-link`} to={'/settings'} onClick={openSettings}>
             {t('adminPanel')}

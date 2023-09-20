@@ -61,7 +61,7 @@ export function getNodeBalance(account?:any, token?:string, chainID?:any, dec?:a
 
 const SRCTOTALSUPPLY = 'SRCTOTALSUPPLY'
 
-function getBlandTs(tokenList:any, chainId?:any, account?:string | null | undefined) {
+export function getBlandTs(tokenList:any, chainId?:any, account?:string | null | undefined) {
   return new Promise(async(resolve) => {
     const len = tokenList.length
     const list:any = {}
@@ -131,6 +131,7 @@ function getBlandTs(tokenList:any, chainId?:any, account?:string | null | undefi
               if (!list[arr[i].token]) list[arr[i].token] = {}
 
               list[arr[i].token][arr[i].key] = fromWei(balance, arr[i].dec)
+              list[arr[i].token][`wei_${arr[i].key}`] = balance.toString()
             }
           }
         } catch (error) {
@@ -164,8 +165,6 @@ export function getNodeTotalsupply(
           }
         ]
         getBlandTs(tokenList, chainId, account).then((res: any) => {
-          // console.log(token)
-          // console.log(res)
           resolve(res)
         })
       }

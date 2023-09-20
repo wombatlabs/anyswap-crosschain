@@ -13,6 +13,7 @@ import ColorSelector from '../../components/ColorSelector'
 import InputPanel from '../../components/InputPanel'
 import Toggle from '../../components/Toggle'
 import ListFactory from '../../components/ListFactory'
+import MenuListFactory from '../../components/MenuListFactory'
 import { OptionWrapper } from './index'
 import { updateStorageData } from '../../utils/storage'
 
@@ -71,6 +72,7 @@ export default function Interface() {
     elementsColorLight: stateElementsColorLight,
     elementsColorDark: stateElementsColorDark,
     socialLinks: stateSocialLinks,
+    menuLinks: stateMenuLinks,
     disableSourceCopyright: stateDisableSourceCopyright,
     tokenIcons: stateTokenIcons
   } = useAppState()
@@ -120,6 +122,8 @@ export default function Interface() {
     }
   }
 
+  const [menuLinks, setMenuLinks] = useState<any[]>(stateMenuLinks || [])
+  
   const [socialLinks, setSocialLinks] = useState<string[]>(stateSocialLinks)
   const [disableSourceCopyright, setDisableSourceCopyright] = useState<boolean>(stateDisableSourceCopyright)
 
@@ -183,6 +187,7 @@ export default function Interface() {
           elementsColorLight,
           elementsColorDark,
           socialLinks,
+          menuLinks,
           tokenIcons: tokenIconsList,
           disableSourceCopyright
         },
@@ -321,6 +326,16 @@ export default function Interface() {
         />
       </OptionWrapper>
 
+      <OptionWrapper>
+        <MenuListFactory
+          title={t('menuLinks')}
+          items={menuLinks}
+          setItems={setMenuLinks}
+          isValidItem={({ title,  address }) => {
+            return Boolean(validUrl.isUri(address)) && title != ``
+          }}
+        />
+      </OptionWrapper>
       <OptionWrapper>
         <ListFactory
           title={t('socialLinks')}
